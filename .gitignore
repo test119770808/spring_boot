@@ -1,0 +1,4 @@
+# Project exclude paths
+/sburredis/.gradle/
+/sburredis/build/
+/sburredis/build/classes/java/main/
