@@ -22,7 +22,7 @@ public class PlaneFinderPoller {
 
     @Scheduled(fixedDelay = 1000)
     private void pollPlanes() {
-        repository.deleteAll();
+//        repository.deleteAll();
 
         client.get()
                 .retrieve()
