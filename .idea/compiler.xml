@@ -10,5 +10,12 @@
         <module name="sburredis.main" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="sburjpa.main" target="21" />
+      <module name="sburjpa.test" target="21" />
+      <module name="sburredis2" target="21" />
+      <module name="sburredis2.main" target="21" />
+      <module name="sburredis2.test" target="21" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -16,13 +16,12 @@ public class PlaneFinderPoller {
 
     // 레디스 연결 요소를 통해서 연결 값 불러오기. - RedisConnectionFactory
     private final RedisConnectionFactory connectionFactory;
-    private final RedisOperations<String, Aircraft> redisOperations;
+    private final AircraftRepository repostiroy;
 
     // 생성자를 통해서 클래스의 기능을 사용할 값들을 초기화.... (생성자 DI)
-    PlaneFinderPoller(RedisConnectionFactory connectionFactory,
-                      RedisOperations<String, Aircraft> redisOperations) {
+    PlaneFinderPoller(RedisConnectionFactory connectionFactory, AircraftRepository repostiroy) {
         this.connectionFactory = connectionFactory;
-        this.redisOperations = redisOperations;
+        this.repostiroy = repostiroy;
     }
 
     // 스케줄 작업을 통해서 특정 시점마다 동작하게 설정...
@@ -37,13 +36,9 @@ public class PlaneFinderPoller {
                 .bodyToFlux(Aircraft.class)
                 .filter(plane -> !plane.getReg().isEmpty())
                 .toStream()
-                .forEach(ac -> redisOperations.opsForValue().set(ac.getReg(), ac));
+                .forEach(repostiroy::save);
 
-        redisOperations.opsForValue()
-                .getOperations()
-                .keys("*")
-                .forEach(ac -> System.out.println(redisOperations.opsForValue().get(ac)));
-
+        repostiroy.findAll().forEach(System.out::println);
 
     }
 }
